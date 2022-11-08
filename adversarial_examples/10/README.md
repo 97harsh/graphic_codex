@@ -1,4 +1,4 @@
-## Draw a sphere on a hexagon in opengl python
+## Draw a Sierpinski gasket with 10000 points in opengl python
 Dall-E Results
 
 ![Img1](dall_e_results/1.png)
