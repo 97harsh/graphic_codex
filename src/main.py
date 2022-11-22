@@ -8,8 +8,7 @@ import argparse
 def main(args):
     config = get_config()
     openai.api_key = config['API Key']
-    get_code(" ".join(args.prompt))
-    
+    get_code(args)
     return 0
 
 
@@ -18,8 +17,11 @@ if __name__ == "__main__":
                     prog = 'Text to code',
                     description = 'Given a prompt -> create a code calling codex api')
 
-    parser.add_argument('-p', dest="prompt", required=True, default= None, nargs="+",  help="Enter the prompt" )
-    args = parser.parse_args()
+    parser.add_argument('-p', dest="prompt", required=True, default= None, nargs="+",  help="Enter the Prompt" )
+    parser.add_argument('-t', dest="temperature", required=False,type=float, default=0,  help="Enter the temperature" )
+    parser.add_argument('-ec', dest="max_edit_count", required=False,type=int, default=5,  help="Enter the Max edit count")
+    parser.add_argument('-tok', dest="max_tokens", required=False,type=int, default=300, help="Enter the Max tokens count" )
 
-    print( "Prompt: {} ".format(" ".join(args.prompt)))
+    args = parser.parse_args()
+    print(args)
     main(args)

@@ -104,7 +104,7 @@ def get_response_edit(inp, instruction, model="code-davinci-edit-001", temperatu
     return response
 
 
-def get_code(prompt, file_path="out/sample1.py", max_edit_count=5):
+def get_code(args, file_path="out/sample1.py"):
     """
     use OpenAPI to fetch the code until it runs without errors
     :param prompt: text prompt to be sent to model
@@ -112,9 +112,12 @@ def get_code(prompt, file_path="out/sample1.py", max_edit_count=5):
     :param max_edit_count: number of retries to count
     :return:
     """
+    prompt = " ".join(args.prompt)
+    max_edit_count = args.max_edit_count
+
     temp_file = "out/temp"
     counter = 1
-    response = get_response_completion(prompt)
+    response = get_response_completion(prompt, temperature=args.temperature, max_tokens=args.max_tokens)
     if response is None:
         raise Exception("Failed to fetch result from API try again")
     print(response['choices'][0]['text'])
