@@ -10,6 +10,7 @@ Sources:
 Program for code generation using openai, with correction
 
 Add API key, generated from:https://beta.openai.com/account/api-keys in config file at ./config.json
+<br>
 {
   "API Key": "<OPENAI-API key>"
 }
