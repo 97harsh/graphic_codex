@@ -1,19 +1,25 @@
 import openai
 from config import get_config
-import sys
+import os,sys
 from util import get_code
+import argparse
 
 
-def main(prompt):
+def main(args):
     config = get_config()
     openai.api_key = config['API Key']
-    get_code(prompt)
+    get_code(" ".join(args.prompt))
+    
     return 0
 
 
 if __name__ == "__main__":
-    if len(sys.argv) == 1:
-        prompt = "program to print hello world in python"
-    else:
-        prompt = sys.argv[1]
-    main(prompt)
+    parser = argparse.ArgumentParser(
+                    prog = 'Text to code',
+                    description = 'Given a prompt -> create a code calling codex api')
+
+    parser.add_argument('-p', dest="prompt", required=True, default= None, nargs="+",  help="Enter the prompt" )
+    args = parser.parse_args()
+
+    print( "Prompt: {} ".format(" ".join(args.prompt)))
+    main(args)
