@@ -117,6 +117,7 @@ def get_code_edit(args, file_path="out_edit/sample.py"):
     prompt = " ".join(args.prompt)
     temp_file = "out_edit/temp"
     counter = 1
+    max_edit_count = args.max_edit_count
 
     f = open(args.starter_code, "r")
     fdata = f.read()
