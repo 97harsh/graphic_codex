@@ -103,6 +103,52 @@ def get_response_edit(inp, instruction, model="code-davinci-edit-001", temperatu
 
     return response
 
+def get_code_edit(args, file_path="out_edit/sample.py"):
+    """
+    use OpenAPI to fetch the code from the file and captures instruction 
+    from argument and then corrects the code until the output is correct
+
+    :param prompt: text prompt to be sent to model
+    :param file_path: location of file to write the result
+    :param max_edit_count: number of retries to count
+    :return:
+    # """
+    print("you have arrived edit method")
+    prompt = " ".join(args.prompt)
+    temp_file = "out_edit/temp"
+    counter = 1
+
+    f = open(args.starter_code, "r")
+    fdata = f.read()
+    f.close()
+    response = get_response_edit( inp = fdata ,instruction=prompt , temperature=args.temperature)
+    if response is None:
+        raise Exception("Failed to fetch result from API try again")
+
+    print(response['choices'][0]['text'])
+    write_to_file(response['choices'][0]['text'], file_path)
+    write_to_file(response['choices'][0]['text'], temp_file + f"_{counter}.py")
+
+    working, result = test_code(file_path)
+    while not working and counter < max_edit_count:
+        print(f"Correction attempt:{counter}")
+        counter += 1
+        response = get_response_edit(inp=response['choices'][0]['text'],
+                                     instruction="\nfix the error message " + result['error']
+                                     )
+        if response is None:
+            raise Exception("Failed to fetch result from API try again")
+        write_to_file(response['choices'][0]['text'], file_path)
+        write_to_file(response['choices'][0]['text'], temp_file + f"_{counter}.py")
+        working, result = test_code(file_path)
+    if working:
+        print("Final result:")
+        print(f"Program to :{prompt}")
+        print('#' * 10)
+        print(read_from_file(file_path))
+        print('#' * 10)
+    return
+
 
 def get_code(args, file_path="out/sample1.py"):
     """
