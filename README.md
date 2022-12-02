@@ -14,7 +14,7 @@ Add API key, generated from:https://beta.openai.com/account/api-keys in config f
   "API Key": "<OPENAI-API key>"
 }
 
-### Code Usage
+## Code Usage
 ```
 python src/main.py -h
 
@@ -34,8 +34,7 @@ optional arguments:
   -sc STARTER_CODE      Enter the file location to edit
 ```
 
-
-### Code Generation
+### 1. Code Generation
 
 Prompting the program<br>
 ```python src/main.py -m gen -p <prompt>```
@@ -45,16 +44,6 @@ Example:<br>
 <br>
 
 The working code is written into ```out/sample1.py```
-
-### Modify existing code with Instruction
-
-```python src/main.py -m edit -p <Instruction> -sc <file location to initial code>```
-<br>
-Example:<br>
-```python src/main.py -m edit -p correct the code -sc path_to_py_file ```
-<br>
-
-The working code is written into ```out_edit/sample1.py```
 
 generated code:
 
@@ -87,3 +76,27 @@ Result from running the generated code:
 1 5 10 10 5 1 
 1 6 15 20 15 6 1 
 ```
+  
+### 2. Modify existing code with Instruction
+
+```python src/main.py -m edit -p <Instruction> -sc <file location to initial code>```
+<br>
+Example:<br>
+```python src/main.py -m edit -p correct the code -sc path_to_py_file ```
+<br>
+
+The working code is written into ```out_edit/sample1.py``` 
+
+ Input code from file <br>
+  ```
+  Print("Hello World ! )
+  ```
+  Corrected Code <br>
+  ```
+  Print("Hello World ! ")
+  ```
+  Output in out_edit/sample1.py <br>
+  ```
+  Hello World !
+  ```
+
