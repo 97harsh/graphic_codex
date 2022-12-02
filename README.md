@@ -15,11 +15,37 @@ Add API key, generated from:https://beta.openai.com/account/api-keys in config f
   "API Key": "<OPENAI-API key>"
 }
 
+## Code Usage
+```
+python src/main.py -h
+
+usage: Text to code [-h] -m {edit,gen} -p PROMPT [PROMPT ...] [-t TEMPERATURE]
+                    [-ec MAX_EDIT_COUNT] [-tok MAX_TOKENS] [-sc STARTER_CODE]
+
+Given a prompt -> create/edit a code calling codex api
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -m {edit,gen}         Enter the mode to operate -> either generate or edit
+  -p PROMPT [PROMPT ...]
+                        Enter the Prompt
+  -t TEMPERATURE        Enter the temperature
+  -ec MAX_EDIT_COUNT    Enter the Max edit count
+  -tok MAX_TOKENS       Enter the Max tokens count
+  -sc STARTER_CODE      Enter the file location to edit
+```
+
+### 1. Code Generation
+
 Prompting the program<br>
-```python src/main.py "<PROMPT>"```
-<br>eg:
-```python src/main.py "program to print 7 rows of pascals triangle in python"```
+```python src/main.py -m gen -p <prompt>```
 <br>
+Example:<br>
+```python src/main.py -m gen -p program to print 7 rows of pascals triangle in python ```
+<br>
+
+The working code is written into ```out/sample1.py```
+
 generated code:
 
 ```
@@ -51,3 +77,27 @@ Result from running the generated code:
 1 5 10 10 5 1 
 1 6 15 20 15 6 1 
 ```
+  
+### 2. Modify existing code with Instruction
+
+```python src/main.py -m edit -p <Instruction> -sc <file location to initial code>```
+<br>
+Example:<br>
+```python src/main.py -m edit -p correct the code -sc path_to_py_file ```
+<br>
+
+The working code is written into ```out_edit/sample1.py``` 
+
+ Input code from file <br>
+  ```
+  Print("Hello World ! )
+  ```
+  Corrected Code <br>
+  ```
+  Print("Hello World ! ")
+  ```
+  Output in out_edit/sample1.py <br>
+  ```
+  Hello World !
+  ```
+
